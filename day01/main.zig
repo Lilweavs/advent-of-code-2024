@@ -77,25 +77,26 @@ fn solvePart2(input: []const u8) !ReturnType {
     var total: isize = 0;
     var offset: usize = 0;
     for (left_list.items) |item| {
-        for (right_list.items[offset..], 0..) |b, i| {
+        for (right_list.items[offset..]) |b| {
             if (item == b) {
                 total += item;
-            } else if (b > item) {
-                offset += i;
+            } else if (item > b) {
+                offset += 1;
+            } else {
                 break;
-            } else {}
+            }
         }
     }
 
     return .{ .answer = total, .time = timer.lap() };
 }
 
-// test "test-part1" {
-//     const result = try solvePart1(@embedFile("test.txt"));
-//     try std.testing.expectEqual(result.answer, 11);
-// }
+test "test-part1" {
+    const result = try solvePart1(@embedFile("test.txt"));
+    try std.testing.expectEqual(11, result.answer);
+}
 
-// test "test-part2" {
-//     const result = solvePart2(@embedFile("test.txt"));
-//     // try std.testing.expectEqual(result.answer, 31);
-// }
+test "test-part2" {
+    const result = try solvePart2(@embedFile("test.txt"));
+    try std.testing.expectEqual(31, result.answer);
+}
